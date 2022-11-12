@@ -5,8 +5,8 @@ namespace ProjetoXadrez
 {
     public static class View
     {
-        private static string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private static string linhaLetras = "  ";
+        private static readonly string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static string linhaLetras;
 
         public static void GeraTabuleiro(Tabuleiro tab)
         {
@@ -18,23 +18,14 @@ namespace ProjetoXadrez
 
                 for (int j = 0; j < tab.Colunas; j++)
                 {
-                    if (tab.Peca(i, j) == null)
-                    {
-                        Console.Write("- ");
-                    }
-                    else
-                    {
-                        //Console.Write($"{tab.Peca(i, j)} ");
-                        ImprimePeca(tab.Peca(i, j));
-                    }
+                    ImprimePeca(tab.Peca(i, j));
                 }
                 Console.WriteLine();
             }
 
             for (int i = 0; i < tab.Colunas; i++)
             {
-                linhaLetras += $"{letras.Substring(i,1)} ";
-                //Console.Write($" {letras.Substring(i, 1)}");
+                linhaLetras += $"{letras.Substring(i,1)}  ";
             }
 
             Console.Write(linhaLetras.TrimEnd());
@@ -42,21 +33,71 @@ namespace ProjetoXadrez
             Console.WriteLine();
         }
 
+        public static void GeraTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis)
+        {
+            ConsoleColor fundoOriginal = Console.BackgroundColor;
+            ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
+
+            linhaLetras = "  ";
+
+            for (int i = 0; i < tab.Linhas; i++)
+            {
+                Console.Write($"{tab.Linhas - i} ");
+
+                for (int j = 0; j < tab.Colunas; j++)
+                {
+                    if (posicoesPossiveis[i, j])
+                    {
+                        Console.BackgroundColor = fundoAlterado;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = fundoOriginal;
+                    }
+                    ImprimePeca(tab.Peca(i, j));
+                    Console.BackgroundColor = fundoOriginal;
+                }
+                
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < tab.Colunas; i++)
+            {
+                linhaLetras += $"{letras.Substring(i, 1)}  ";
+            }
+
+            Console.Write(linhaLetras.TrimEnd());
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.BackgroundColor = fundoOriginal;
+        }
+
         public static void ImprimePeca(Peca peca)
         {
-            if (peca.Cor == Cor.Branca)
+            if (peca == null)
             {
-                Console.Write($"{peca}");                
+                Console.Write("- ");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                if (peca.Cor == Cor.Branca)
+                {
+                    Console.Write($"{peca}");
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
 
-                Console.Write($"{peca}");
+                    Console.Write($"{peca}");
 
-                Console.ForegroundColor = aux;
+                    Console.ForegroundColor = aux;
+                }
+
+                Console.Write(" ");
             }
+
+            
 
             Console.Write(" ");
         }

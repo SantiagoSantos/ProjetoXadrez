@@ -14,6 +14,12 @@ try
 
         Console.Write("Origem: ");
         Posicao origem = View.LerPosicaoXadrez().ToPosicao();
+                
+        bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
+
+        Console.Clear();
+
+        View.GeraTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
         Console.Write("Destino: ");
         Posicao destino = View.LerPosicaoXadrez().ToPosicao();

@@ -6,7 +6,7 @@ namespace ProjetoXadrez.TabuleiroConfig
     {
         public int Linhas { get; private set; }
         public int Colunas { get; private set; }
-        private Peca[,] _pecas;
+        private readonly Peca[,] _pecas;
 
         public Tabuleiro(int linhas, int colunas)
         {

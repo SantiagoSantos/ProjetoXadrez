@@ -1,6 +1,6 @@
 ﻿namespace ProjetoXadrez.TabuleiroConfig
 {
-    public class Peca
+    public abstract class Peca
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; protected set; }
@@ -19,5 +19,7 @@
         {
             QuantidadeMovimentos++;
         }
+
+        public abstract bool[,] MovimentosPossiveis();
     }
 }
