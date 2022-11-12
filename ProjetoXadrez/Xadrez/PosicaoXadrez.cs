@@ -15,7 +15,7 @@ namespace ProjetoXadrez.Xadrez
 
         public Posicao ToPosicao()
         {
-            return new Posicao(8 - Linha, Coluna - 'A');
+            return new Posicao(8 - Linha, Char.ToUpper(Coluna) - 'A');
         }
 
         public override string ToString()

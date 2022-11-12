@@ -6,7 +6,22 @@ try
 {
     Partida partida = new Partida();
 
-    View.GeraTabuleiro(partida.Tabuleiro);
+    while (!partida.PartidaTerminada)
+    {
+        Console.Clear();
+
+        View.GeraTabuleiro(partida.Tabuleiro);
+
+        Console.Write("Origem: ");
+        Posicao origem = View.LerPosicaoXadrez().ToPosicao();
+
+        Console.Write("Destino: ");
+        Posicao destino = View.LerPosicaoXadrez().ToPosicao();
+
+        partida.ExecutaMovimento(origem, destino);
+    }
+
+    
 
 
     Console.ReadLine();

@@ -1,4 +1,5 @@
 ﻿using ProjetoXadrez.TabuleiroConfig;
+using ProjetoXadrez.Xadrez;
 
 namespace ProjetoXadrez
 {
@@ -9,6 +10,8 @@ namespace ProjetoXadrez
 
         public static void GeraTabuleiro(Tabuleiro tab)
         {
+            linhaLetras = "  ";
+
             for (int i = 0; i < tab.Linhas; i++)
             {
                 Console.Write($"{tab.Linhas - i} ");
@@ -31,9 +34,12 @@ namespace ProjetoXadrez
             for (int i = 0; i < tab.Colunas; i++)
             {
                 linhaLetras += $"{letras.Substring(i,1)} ";
+                //Console.Write($" {letras.Substring(i, 1)}");
             }
 
             Console.Write(linhaLetras.TrimEnd());
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         public static void ImprimePeca(Peca peca)
@@ -53,6 +59,13 @@ namespace ProjetoXadrez
             }
 
             Console.Write(" ");
+        }
+
+        public static PosicaoXadrez LerPosicaoXadrez()
+        {
+            string valor = Console.ReadLine();
+
+            return new PosicaoXadrez(valor[0], int.Parse(valor[1].ToString()));
         }
     }
 }
