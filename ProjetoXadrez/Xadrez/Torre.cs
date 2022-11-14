@@ -4,7 +4,7 @@ namespace ProjetoXadrez.Xadrez
 {
     public  class Torre : Peca
     {
-        public Torre(Cor cor, Tabuleiro tabuleiro) : base(cor, tabuleiro)
+        public Torre(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
         {
 
         }
@@ -66,8 +66,6 @@ namespace ProjetoXadrez.Xadrez
                 }
                 pos.Coluna--; // = pos.Coluna - 1;
             }
-
-
 
             return matriz;
         }

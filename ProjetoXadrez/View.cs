@@ -8,6 +8,42 @@ namespace ProjetoXadrez
         private static readonly string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static string linhaLetras;
 
+        public static void ImprimePartida(Partida partida)
+        {
+            GeraTabuleiro(partida.Tabuleiro);
+
+            Console.WriteLine();
+
+            ImprimePecasCapturadas(partida);
+
+            Console.WriteLine();
+
+            Console.WriteLine($"Turno: {partida.Turno}");
+            Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+        }
+
+        private static void ImprimePecasCapturadas(Partida partida)
+        {
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("Brancas: ");
+            ImprimeConjunto(partida.RecuperaPecasCapturadas(Cor.Branca));
+            Console.WriteLine();
+            Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            ImprimeConjunto(partida.RecuperaPecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        private static void ImprimeConjunto(HashSet<Peca> lista)
+        {
+            Console.Write("[");
+            Console.Write(string.Join(" ", lista));
+            Console.Write("]");
+
+        }
+
         public static void GeraTabuleiro(Tabuleiro tab)
         {
             linhaLetras = "  ";

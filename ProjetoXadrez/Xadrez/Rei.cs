@@ -4,7 +4,7 @@ namespace ProjetoXadrez.Xadrez
 {
     public class Rei : Peca
     {
-        public Rei(Cor cor, Tabuleiro tabuleiro) : base(cor, tabuleiro)
+        public Rei(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
         {
 
         }

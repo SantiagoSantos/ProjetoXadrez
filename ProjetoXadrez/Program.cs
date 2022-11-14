@@ -4,32 +4,44 @@ using ProjetoXadrez.Xadrez;
 
 try
 {
-    Partida partida = new Partida();
+    Partida partida = new();
 
     while (!partida.PartidaTerminada)
     {
-        Console.Clear();
+        try
+        {
+            Console.Clear();
 
-        View.GeraTabuleiro(partida.Tabuleiro);
+            View.ImprimePartida(partida);
 
-        Console.Write("Origem: ");
-        Posicao origem = View.LerPosicaoXadrez().ToPosicao();
-                
-        bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
+            Console.Write("Origem: ");
+            Posicao origem = View.LerPosicaoXadrez().ToPosicao();
 
-        Console.Clear();
+            partida.ValidarPosicaoOrigem(origem);
 
-        View.GeraTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+            bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
 
-        Console.Write("Destino: ");
-        Posicao destino = View.LerPosicaoXadrez().ToPosicao();
+            Console.Clear();
 
-        partida.ExecutaMovimento(origem, destino);
+            View.GeraTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+
+            Console.Write("Destino: ");
+            Posicao destino = View.LerPosicaoXadrez().ToPosicao();
+
+            partida.ValidarPosicaDestino(origem, destino);
+
+            partida.RealizaJogada(origem, destino);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine("Pressione 'Enter'");
+            Console.ReadKey();
+        }
+        
     }
 
     
-
-
     Console.ReadLine();
 }
 catch (Exception ex)
