@@ -13,6 +13,9 @@ namespace ProjetoXadrez.Xadrez
         {
             Peca p = Tabuleiro.Peca(posicao);
 
+            //if (p == null || p.Cor != Cor)
+            //    return true;
+
             return p == null || p.Cor != Cor;
         }
 
@@ -44,7 +47,7 @@ namespace ProjetoXadrez.Xadrez
             }
 
             //Movimento diagonal inferior direita
-            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
             if (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 matriz[pos.Linha, pos.Coluna] = true;
