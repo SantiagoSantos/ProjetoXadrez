@@ -2,11 +2,16 @@
 
 namespace ProjetoXadrez.Xadrez
 {
-    public  class Torre : Peca
+    public class Bispo : Peca
     {
-        public Torre(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
+        public Bispo(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
         {
+        }
 
+        private bool PodeMover(Posicao pos)
+        {
+            Peca peca = Tabuleiro.Peca(pos);
+            return peca == null || peca.Cor != Cor;
         }
 
         public override bool[,] MovimentosPossiveis()
@@ -15,8 +20,8 @@ namespace ProjetoXadrez.Xadrez
 
             Posicao pos = new(0, 0);
 
-            //Movimento para cima
-            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+            //Diagonal superior esquerda
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
             while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 matriz[pos.Linha, pos.Coluna] = true;
@@ -25,11 +30,11 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
             }
 
-            //Movimento para baixo
-            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+            //Diagonal superior direita
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
             while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 matriz[pos.Linha, pos.Coluna] = true;
@@ -38,11 +43,11 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
             }
 
-            //Movimento para direita
-            pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+            //Diagonal inferior esquerda
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
             while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 matriz[pos.Linha, pos.Coluna] = true;
@@ -51,11 +56,11 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
             }
 
-            //Movimento para esquerda
-            pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+            //Diagonal inferior direita
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
             while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 matriz[pos.Linha, pos.Coluna] = true;
@@ -64,22 +69,15 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
             }
 
             return matriz;
         }
 
-        private bool PodeMover(Posicao posicao)
-        {
-            Peca p = Tabuleiro.Peca(posicao);
-
-            return p == null || p.Cor != Cor;
-        }
-
         public override string ToString()
         {
-            return "T";
+            return "B";
         }
     }
 }

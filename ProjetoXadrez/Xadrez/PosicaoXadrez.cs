@@ -9,7 +9,7 @@ namespace ProjetoXadrez.Xadrez
 
         public PosicaoXadrez(char coluna, int linha)
         {
-            Coluna = coluna;
+            Coluna = char.ToUpper(coluna);
             Linha = linha;
         }
 

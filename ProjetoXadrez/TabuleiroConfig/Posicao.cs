@@ -2,8 +2,8 @@
 {
     public class Posicao
     {
-        public int Linha { get; set; }
-        public int Coluna { get; set; }
+        public int Linha { get; private set; }
+        public int Coluna { get; private set; }
 
         public Posicao(int linha, int coluna)
         {
