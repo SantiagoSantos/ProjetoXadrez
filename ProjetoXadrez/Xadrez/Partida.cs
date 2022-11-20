@@ -39,22 +39,63 @@ namespace ProjetoXadrez.Xadrez
                 PecasCapturadas.Add(pecaCapturada);
             }
 
+            //Movimento especial Roque Pequeno
+            if (pc is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna + 1);
+                Peca torre = Tabuleiro.RetirarPeca(origemTorre);
+                torre.IncrementarMovimentos();
+                Tabuleiro.ColocarPeca(torre, destinoTorre);
+            }
+
+            //Movimento especial Roque Grande
+            if (pc is Rei && destino.Coluna == origem.Coluna - 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna - 1);
+                Peca torre = Tabuleiro.RetirarPeca(origemTorre);
+                torre.IncrementarMovimentos();
+                Tabuleiro.ColocarPeca(torre, destinoTorre);
+            }
+
             return pecaCapturada;
         }
 
         public HashSet<Peca> RecuperaPecasCapturadas(Cor cor)
         {
-            HashSet<Peca> aux = PecasCapturadas.Where(e => e.Cor == cor).ToHashSet();
+            /*HashSet<Peca> aux = PecasCapturadas.Where(e => e.Cor == cor).ToHashSet();
 
+            return aux;*/
+
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca x in PecasCapturadas)
+            {
+                if (x.Cor == cor)
+                {
+                    aux.Add(x);
+                }
+            }
             return aux;
         }
 
         public HashSet<Peca> PecasEmJogo(Cor cor)
         {
-            HashSet<Peca> aux = Pecas.Where(e => e.Cor == cor).ToHashSet();
+            /*HashSet<Peca> aux = Pecas.Where(e => e.Cor == cor).ToHashSet();
 
             aux.ExceptWith(RecuperaPecasCapturadas(cor));
 
+            return aux;*/
+
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca x in Pecas)
+            {
+                if (x.Cor == cor)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(RecuperaPecasCapturadas(cor));
             return aux;
         }
 
@@ -91,7 +132,28 @@ namespace ProjetoXadrez.Xadrez
                 Tabuleiro.ColocarPeca(pecaCapturada, destino);
                 PecasCapturadas.Remove(pecaCapturada);
             }
+
             Tabuleiro.ColocarPeca(peca, origem);
+
+            //Movimento especial Roque Pequeno
+            if (peca is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna + 1);
+                Peca torre = Tabuleiro.RetirarPeca(destinoTorre);
+                torre.DecrementarMovimentos();
+                Tabuleiro.ColocarPeca(torre, origemTorre);
+            }
+
+            //Movimento especial Roque Grande
+            if (peca is Rei && destino.Coluna == origem.Coluna - 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna - 1);
+                Peca torre = Tabuleiro.RetirarPeca(destinoTorre);
+                torre.DecrementarMovimentos();
+                Tabuleiro.ColocarPeca(torre, origemTorre);
+            }
         }
 
         private void ProximoJogador()
@@ -136,7 +198,7 @@ namespace ProjetoXadrez.Xadrez
             Pecas.Add(peca);
         }
 
-        private Cor Adversaria(Cor cor)
+        private static Cor Adversaria(Cor cor)
         {
             return cor == Cor.Branca ? Cor.Preta : Cor.Branca;
         }
@@ -188,7 +250,7 @@ namespace ProjetoXadrez.Xadrez
                         if (mat[i,j])
                         {
                             Posicao origem = item.Posicao;
-                            Posicao destino = new Posicao(i, j);
+                            Posicao destino = new(i, j);
                             Peca pecaCapturada = ExecutaMovimento(origem, destino);
                             bool testeXeque = EstaEmXeque(cor);
                             DesfazMovimento(origem, destino, pecaCapturada);
@@ -210,7 +272,7 @@ namespace ProjetoXadrez.Xadrez
             ColocarNovaPeca('b', 1, new Cavalo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('c', 1, new Bispo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('d', 1, new Rainha(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca, this));
             ColocarNovaPeca('f', 1, new Bispo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('g', 1, new Cavalo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('h', 1, new Torre(Tabuleiro, Cor.Branca));
@@ -227,7 +289,7 @@ namespace ProjetoXadrez.Xadrez
             ColocarNovaPeca('b', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('c', 8, new Bispo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('d', 8, new Rainha(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('e', 8, new Rei(Tabuleiro, Cor.Preta, this));
             ColocarNovaPeca('f', 8, new Bispo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('g', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('h', 8, new Torre(Tabuleiro, Cor.Preta));

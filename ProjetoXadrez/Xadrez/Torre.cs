@@ -25,7 +25,7 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+                pos.DefinirValores(pos.Linha - 1, pos.Coluna);
             }
 
             //Movimento para baixo
@@ -38,7 +38,7 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+                pos.DefinirValores(pos.Linha + 1, pos.Coluna);
             }
 
             //Movimento para direita
@@ -51,7 +51,7 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+                pos.DefinirValores(pos.Linha, pos.Coluna + 1);
             }
 
             //Movimento para esquerda
@@ -64,7 +64,7 @@ namespace ProjetoXadrez.Xadrez
                 {
                     break;
                 }
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+                pos.DefinirValores(pos.Linha, pos.Coluna - 1);
             }
 
             return matriz;
