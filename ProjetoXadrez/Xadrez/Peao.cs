@@ -6,8 +6,11 @@ namespace ProjetoXadrez.Xadrez
 {
     public class Peao : Peca
     {
-        public Peao(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor)
+        private Partida _partida;
+
+        public Peao(Tabuleiro tabuleiro, Cor cor, Partida partida) : base(tabuleiro, cor)
         {
+            _partida = partida;
         }
 
         private bool ExisteInimigo(Posicao pos)
@@ -53,6 +56,24 @@ namespace ProjetoXadrez.Xadrez
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+
+                //Jogada especial En Passant
+                if (Posicao.Linha == 3)
+                {
+                    Posicao pecaEsquerda = new(Posicao.Linha, Posicao.Coluna - 1);
+
+                    if (Tabuleiro.PosicaoValida(pecaEsquerda) && ExisteInimigo(pecaEsquerda) && Tabuleiro.Peca(pecaEsquerda) == _partida.PecaVulneravelEnPassant)
+                    {
+                        mat[pecaEsquerda.Linha - 1, pecaEsquerda.Coluna] = true;
+                    }
+
+                    Posicao pecaDireita = new(Posicao.Linha, Posicao.Coluna + 1);
+
+                    if (Tabuleiro.PosicaoValida(pecaDireita) && ExisteInimigo(pecaDireita) && Tabuleiro.Peca(pecaDireita) == _partida.PecaVulneravelEnPassant)
+                    {
+                        mat[pecaDireita.Linha - 1, pecaDireita.Coluna] = true;
+                    }
+                }                
             }
             else
             {
@@ -76,6 +97,24 @@ namespace ProjetoXadrez.Xadrez
                 if (Tabuleiro.PosicaoValida(pos) && ExisteInimigo(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
+                }
+
+                //Jogada especial En Passant
+                if (Posicao.Linha == 4)
+                {
+                    Posicao pecaEsquerda = new(Posicao.Linha, Posicao.Coluna - 1);
+
+                    if (Tabuleiro.PosicaoValida(pecaEsquerda) && ExisteInimigo(pecaEsquerda) && Tabuleiro.Peca(pecaEsquerda) == _partida.PecaVulneravelEnPassant)
+                    {
+                        mat[pecaEsquerda.Linha + 1, pecaEsquerda.Coluna] = true;
+                    }
+
+                    Posicao pecaDireita = new(Posicao.Linha, Posicao.Coluna + 1);
+
+                    if (Tabuleiro.PosicaoValida(pecaDireita) && ExisteInimigo(pecaDireita) && Tabuleiro.Peca(pecaDireita) == _partida.PecaVulneravelEnPassant)
+                    {
+                        mat[pecaDireita.Linha + 1, pecaDireita.Coluna] = true;
+                    }
                 }
             }
 
