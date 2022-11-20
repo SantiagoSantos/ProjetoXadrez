@@ -115,11 +115,35 @@ namespace ProjetoXadrez.Xadrez
         public void RealizaJogada(Posicao origem, Posicao destino)
         {
             var pecaCapturada = ExecutaMovimento(origem, destino);
+            Peca peca = Tabuleiro.Peca(destino);
 
             if (EstaEmXeque(JogadorAtual))
             {
                 DesfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em xeque.");
+            }
+
+            //Jogada especial Promocao
+            if (peca is Peao)
+            {
+                if ((peca.Cor == Cor.Branca && destino.Linha == 0) || (peca.Cor == Cor.Preta && destino.Linha == 7))
+                {
+                    peca = Tabuleiro.RetirarPeca(destino);
+                    Pecas.Remove(peca);
+
+                    Peca rainha = new Rainha(Tabuleiro, peca.Cor);
+                    Tabuleiro.ColocarPeca(rainha, destino);
+                    Pecas.Add(rainha);
+                }
+            }
+
+            if (EstaEmXeque(Adversaria(JogadorAtual)))
+            {
+                Xeque = true;
+            }
+            else
+            {
+                Xeque = false;
             }
 
             if (TesteXequeMate(Adversaria(JogadorAtual)))
@@ -130,9 +154,7 @@ namespace ProjetoXadrez.Xadrez
             {
                 Turno++;
                 ProximoJogador();
-            }
-
-            Peca peca = Tabuleiro.Peca(destino);
+            }            
 
             //Jogada especial En Passant
             if (peca is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
